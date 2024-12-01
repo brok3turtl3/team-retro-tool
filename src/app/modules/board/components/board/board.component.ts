@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
+import { CategoryService } from 'src/app/services/category.service';
 import { Category } from 'src/app/state/app.state';
 import { selectCategories } from 'src/app/state/selectors/category.selectors';
-import { loadCategories } from 'src/app/state/actions/category.actions';
+import { loadCategoriesSuccess } from 'src/app/state/actions/category.actions';
 
 @Component({
   selector: 'app-board',
@@ -12,11 +13,14 @@ import { loadCategories } from 'src/app/state/actions/category.actions';
 })
 export class BoardComponent implements OnInit {
   categories$: Observable<Category[]>;
-  constructor(private store: Store) {
+  constructor(private store: Store, private categoryService: CategoryService) {
     this.categories$ = this.store.select(selectCategories);
   }
 
   ngOnInit(): void {
-    this.store.dispatch(loadCategories());
+    console.log('HIT!!!');
+    this.categoryService.getCategories().subscribe((categories) => {
+      this.store.dispatch(loadCategoriesSuccess({ categories }));
+    });
   }
 }
