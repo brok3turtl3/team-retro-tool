@@ -8,7 +8,11 @@ import {
 import { CategoryState } from '../app.state';
 
 export const initialState: CategoryState = {
-  categories: [],
+  categories: [
+    { id: '1', name: 'What Went Well' },
+    { id: '2', name: 'What Didn’t Go Well' },
+    { id: '3', name: 'Action Items' },
+  ],
 };
 
 export const categoryReducer = createReducer(

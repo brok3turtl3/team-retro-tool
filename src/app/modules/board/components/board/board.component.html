@@ -1,1 +1,9 @@
 <h1>HUZZAH!!! Welcome to the Board Component!</h1>
+<div class="categories">
+  <h2>Categories</h2>
+  <ul>
+    <li *ngFor="let category of categories$ | async">
+      {{ category.name }}
+    </li>
+  </ul>
+</div>
