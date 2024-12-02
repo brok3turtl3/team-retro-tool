@@ -29,8 +29,14 @@ var supabaseClient = supabase.CreateClient(
 )
 
 type Category struct {
-    ID   string `json:"id"`
+    ID   int `json:"id"`
     Name string `json:"name"`
+}
+
+type Card struct {
+    ID         int `json:"id"`
+    Content    string `json:"content"`
+    CategoryID int `json:"categoryId"`
 }
 
 func getCategories(w http.ResponseWriter, r *http.Request) {
@@ -45,10 +51,24 @@ func getCategories(w http.ResponseWriter, r *http.Request) {
     json.NewEncoder(w).Encode(categories)
 }
 
+func getCards(w http.ResponseWriter, r *http.Request) {
+    var cards []Card
+    err := supabaseClient.DB.From("cards").Select("*").Execute(&cards)
+    if err != nil {
+        log.Printf("Error fetching cards: %v", err)
+        http.Error(w, "Failed to fetch cards", http.StatusInternalServerError)
+        return
+    }
+    log.Printf("Fetched cards: %v", cards)
+    json.NewEncoder(w).Encode(cards)
+}
+
 func main() {
     r := mux.NewRouter()
 
     r.HandleFunc("/categories", getCategories).Methods("GET")
+	r.HandleFunc("/cards", getCards).Methods("GET")
+
 
 	corsHandler := handlers.CORS(
         handlers.AllowedOrigins([]string{"http://localhost:4200"}), // Allow Angular frontend
