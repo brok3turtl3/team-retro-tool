@@ -20,6 +20,7 @@ const routes: Routes = [
     loadChildren: () =>
       import('./modules/admin/admin.module').then((m) => m.AdminModule),
   },
+  { path: 'login', loadChildren: () => import('./modules/landing-page/landing-page.module').then(m => m.LandingPageModule) },
 ];
 
 @NgModule({
