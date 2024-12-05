@@ -134,8 +134,16 @@ func loginUser(w http.ResponseWriter, r *http.Request) {
         return
     }
 
+    response := map[string]interface{}{
+        "access_token": session.AccessToken,
+        "user": map[string]string{
+            "id": session.User.ID,
+            "email": session.User.Email,
+            "role": "User",
+        },
+    }
     log.Printf("User logged in: %v", input.Email)
-    json.NewEncoder(w).Encode(session)
+    json.NewEncoder(w).Encode(response)
 }
 
 func getUser(w http.ResponseWriter, r *http.Request) {
