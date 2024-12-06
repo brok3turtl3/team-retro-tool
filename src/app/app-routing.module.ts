@@ -15,12 +15,18 @@ const routes: Routes = [
     loadChildren: () =>
       import('./modules/board/board.module').then((m) => m.BoardModule),
   },
-  {
+  /*   {
     path: 'admin',
     loadChildren: () =>
       import('./modules/admin/admin.module').then((m) => m.AdminModule),
+  }, */
+  {
+    path: 'login',
+    loadChildren: () =>
+      import('./modules/landing-page/landing-page.module').then(
+        (m) => m.LandingPageModule
+      ),
   },
-  { path: 'login', loadChildren: () => import('./modules/landing-page/landing-page.module').then(m => m.LandingPageModule) },
 ];
 
 @NgModule({
